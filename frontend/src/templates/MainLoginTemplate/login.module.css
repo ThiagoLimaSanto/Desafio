@@ -28,13 +28,6 @@
   align-items: center;
 }
 
-.form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
 .title {
   margin-bottom: 40px;
   font-weight: 800;

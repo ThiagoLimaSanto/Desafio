@@ -22,8 +22,8 @@ export async function getUserByToken(
   reply: FastifyReply,
 ) {
   try {
-    await request.jwtVerify();
+    await request.jwtVerify({ onlyCookie: true });
   } catch (error) {
-    return reply.status(401).send({ message: "Não autorizado!" });
+    return reply.code(401).send({ message: "Não autorizado!" });
   }
 }

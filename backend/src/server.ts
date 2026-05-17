@@ -17,6 +17,11 @@ if (
   throw new Error("Variaveis de ambiente não definida");
 }
 
+app.register(cors, {
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+});
+
 app.register(fastifyCookie, {
   secret: process.env.COOKIE_SECRET,
 });
@@ -27,12 +32,6 @@ app.register(fastifyJwt, {
     cookieName: "token",
     signed: false,
   },
-});
-
-app.register(cors, {
-  origin: process.env.FRONTEND_URL,
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
 });
 
 app.register(UserRouter, { prefix: "/user" });
