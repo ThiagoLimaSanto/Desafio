@@ -1,14 +1,12 @@
-import { fastify } from "fastify";
-import "dotenv/config";
 import fastifyCookie from "@fastify/cookie";
-import fastifyJwt from "@fastify/jwt";
 import cors from "@fastify/cors";
+import fastifyJwt from "@fastify/jwt";
+import "dotenv/config";
+import { fastify } from "fastify";
 import { connect } from "./repository/mongoose";
 import { UserRouter } from "./routes/UserRouter";
 
 export const app = fastify();
-
-connect();
 
 if (
   !process.env.FRONTEND_URL ||
@@ -41,7 +39,14 @@ app.register(UserRouter, { prefix: "/user" });
 
 const start = async () => {
   try {
-    await app.listen({ port: Number(process.env.PORT) });
+    await connect();
+
+    await app.listen({
+      port: Number(process.env.PORT),
+      host: "0.0.0.0",
+    });
+
+    console.log(`Server running on port ${process.env.PORT}`);
   } catch (err) {
     app.log.error(err);
     process.exit(1);

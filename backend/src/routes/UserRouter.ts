@@ -1,12 +1,13 @@
 import { FastifyInstance } from "fastify";
 import { UserController } from "../controllers/UserController";
+import { authGuard } from "../middlewares/auth.middleware";
 const userController = new UserController();
 
 export async function UserRouter(app: FastifyInstance) {
   app.get(
     "/checkAuth",
     {
-      preHandler: [],
+      preHandler: [authGuard],
       schema: {
         response: 200,
       },
@@ -17,16 +18,14 @@ export async function UserRouter(app: FastifyInstance) {
   app.post(
     "/cadastrar",
     {
-      preHandler: [],
       schema: {
         body: {
           type: "object",
-          required: ["name", "email", "password", "role"],
+          required: ["name", "email", "password"],
           properties: {
             name: { type: "string" },
             email: { type: "string" },
             password: { type: "string" },
-            role: { type: "string", enum: ["ADMIN", "USER"] },
           },
         },
         response: 201,
@@ -53,10 +52,10 @@ export async function UserRouter(app: FastifyInstance) {
     userController.Login.bind(userController),
   );
 
-  app.post(
+  app.get(
     "/logout",
     {
-      preHandler: [],
+      preHandler: [authGuard],
       schema: {
         response: 200,
       },

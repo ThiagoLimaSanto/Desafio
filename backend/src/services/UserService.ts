@@ -1,4 +1,4 @@
-import { UserLogin, UserSchema } from "../types/User";
+import { UserLogin, userRole, UserSchema } from "../types/User";
 import { User } from "../models/UserModel";
 import { AppError } from "../errors/AppError";
 import { hashPassword, verifyPassword } from "../helpers/argon2";
@@ -8,13 +8,17 @@ export class UserService {
     const user = await User.findById(id).select("-password");
 
     if (!user) throw new AppError("Usuário nao encontrado!", 404);
-
+    
     return user;
   }
   async create(user: UserSchema) {
     const passwordPepper = user.password + process.env.PEPPER;
     const password_hash = await hashPassword(passwordPepper);
-    const userCreated = await User.create({ ...user, password: password_hash });
+    const userCreated = await User.create({
+      ...user,
+      password: password_hash,
+      role: userRole.USER,
+    });
     return userCreated;
   }
 
@@ -24,11 +28,13 @@ export class UserService {
 
     const passwordPepper = user.password + process.env.PEPPER;
 
-    const isValidPassword = await verifyPassword(user.password, passwordPepper);
+    
+    
+    const isValidPassword = await verifyPassword(userFound.password, passwordPepper);
 
     if (!isValidPassword)
       throw new AppError("Usuário ou senha incorretos!", 400);
-
+    
     return {
       user: {
         id: userFound.id,
