@@ -3,6 +3,17 @@ import { UserController } from "../controllers/UserController";
 const userController = new UserController();
 
 export async function UserRouter(app: FastifyInstance) {
+  app.get(
+    "/checkAuth",
+    {
+      preHandler: [],
+      schema: {
+        response: 200,
+      },
+    },
+    userController.checkAuth.bind(userController),
+  );
+
   app.post(
     "/cadastrar",
     {
@@ -22,5 +33,34 @@ export async function UserRouter(app: FastifyInstance) {
       },
     },
     userController.create.bind(userController),
+  );
+
+  app.post(
+    "/login",
+    {
+      schema: {
+        body: {
+          type: "object",
+          required: ["email", "password"],
+          properties: {
+            email: { type: "string" },
+            password: { type: "string" },
+          },
+        },
+        response: 200,
+      },
+    },
+    userController.Login.bind(userController),
+  );
+
+  app.post(
+    "/logout",
+    {
+      preHandler: [],
+      schema: {
+        response: 200,
+      },
+    },
+    userController.logout.bind(userController),
   );
 }
