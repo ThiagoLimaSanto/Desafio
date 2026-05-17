@@ -1,10 +1,12 @@
-export type userRole = "admin" | "user";
+export enum userRole {
+  USER = "USER",
+  ADMIN = "ADMIN",
+}
 
-export type User = {
+export type UserSchema = {
   name: string;
   email: string;
   password: string;
-  role: userRole;
 };
 
 export type UserLogin = {

@@ -4,6 +4,7 @@ import fastifyCookie from "@fastify/cookie";
 import fastifyJwt from "@fastify/jwt";
 import cors from "@fastify/cors";
 import { connect } from "./repository/mongoose";
+import { UserRouter } from "./routes/UserRouter";
 
 export const app = fastify();
 
@@ -35,6 +36,8 @@ app.register(cors, {
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
 });
+
+app.register(UserRouter, { prefix: "/user" });
 
 const start = async () => {
   try {
