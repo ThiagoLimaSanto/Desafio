@@ -1,0 +1,55 @@
+.home {
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px 24px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.userContainer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.userInfo {
+  text-align: right;
+}
+
+.userName {
+  font-weight: 500;
+}
+
+.userRole {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #d1d5db;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.logout:hover {
+  color: red;
+}

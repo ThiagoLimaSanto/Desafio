@@ -52,7 +52,7 @@ export async function UserRouter(app: FastifyInstance) {
     userController.Login.bind(userController),
   );
 
-  app.get(
+  app.post(
     "/logout",
     {
       preHandler: [authGuard],

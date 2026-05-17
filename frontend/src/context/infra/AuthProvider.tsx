@@ -15,11 +15,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data: user, isLoading: loading } = useQuery<User | undefined>({
+  const { data: user, isLoading: loading } = useQuery<User | null>({
     queryKey: ["auth-user"],
     queryFn: async () => {
-      const response = await api.get("/user/checkAuth");
-      return response.data?.data ?? undefined;
+      const res = await api.get("/user/checkAuth");
+      return res.data?.data ?? null;
     },
     retry: false,
   });
@@ -28,13 +28,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const loginMutation = useMutation({
     mutationFn: async (data: UserLogin) => {
+      showMessage.dismiss();
       const response = await api.post("/user/login", data);
-      return response.data.data;
+      console.log(response.data);
+      
+      return response.data.data.user;
     },
     onSuccess: (data: User) => {
       queryClient.setQueryData(["auth-user"], data);
-      showMessage.success("Logado com sucesso!");
-      navigate("/");
+
+      showMessage.success("Entrou!");
+
+      navigate(data.role === "ADMIN" ? "/admin" : "/home", {
+        replace: true,
+      });
     },
     onError: (err: unknown) => {
       handleError(err);
@@ -43,11 +50,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const registerMutation = useMutation({
     mutationFn: async (data: UserSchema) => {
+      showMessage.dismiss();
       await api.post("/user/cadastrar", data);
     },
     onSuccess: () => {
       showMessage.success("Conta criada!");
-      navigate("/login");
+      navigate("/login", { replace: true });
     },
     onError: (err: unknown) => {
       handleError(err);
@@ -56,12 +64,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logoutMutation = useMutation({
     mutationFn: async () => {
+      showMessage.dismiss();
       await api.post("/user/logout");
     },
     onSuccess: () => {
-      queryClient.removeQueries({ queryKey: ["auth-user"] });
+      queryClient.setQueryData(["auth-user"], null);
       showMessage.success("Saiu!");
-      navigate("/login");
+      navigate("/login", { replace: true });
     },
     onError: (err: unknown) => {
       handleError(err);
@@ -69,6 +78,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   });
 
   const handleError = (err: unknown) => {
+    showMessage.dismiss();
     if (err instanceof AxiosError) {
       showMessage.error(err.response?.data?.message);
     } else if (err instanceof Error) {

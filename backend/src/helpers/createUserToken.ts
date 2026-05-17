@@ -1,11 +1,12 @@
 import { FastifyReply } from "fastify";
 import { cookieOptions } from "../types/CookieOptions";
+import { userRole } from "../types/User";
 
 export async function tokenGenerate(
   reply: FastifyReply,
   id: string,
   name: string,
-  role: string,
+  role: userRole,
 ) {
   const token = await reply.jwtSign({ id, name, role }, { expiresIn: "7d" });
 

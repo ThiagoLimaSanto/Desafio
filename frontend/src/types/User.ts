@@ -1,3 +1,5 @@
+export type userRole = "USER" | "ADMIN";
+
 export type UserSchema = {
   name: string;
   email: string;
@@ -13,4 +15,5 @@ export type User = {
   id: string;
   name: string;
   email: string;
+  role: string;
 };

@@ -4,7 +4,7 @@ import type { User, UserLogin, UserSchema } from "../../types/User";
 export type AuthContextType = {
   isAuthenticated: boolean;
   loading: boolean;
-  user?: User;
+  user?: User | null;
   login: (data: UserLogin) => void;
   registerUser: (data: UserSchema) => void;
   logout: () => void;

@@ -8,11 +8,11 @@ const service = new UserService();
 
 export class UserController {
   async checkAuth(request: FastifyRequest, reply: FastifyReply) {
-    const userId = request.user.id;
+    const user = request.user;
 
-    const user = await service.checkAuth(userId);
+    const data = await service.checkAuth(user);
 
-    return reply.status(200).send({ message: "Autenticado!", data: user });
+    return reply.status(200).send({ message: "Autenticado!", data });
   }
   async create(
     request: FastifyRequest<{
@@ -21,6 +21,10 @@ export class UserController {
     reply: FastifyReply,
   ) {
     const { name, email, password } = request.body;
+
+    if (!name || !email || !password) {
+      return reply.status(400).send({ message: "Dados obrigatorio!" });
+    }
 
     const user = await service.create({ name, email, password });
 

@@ -1,6 +1,8 @@
-export const cookieOptions = {
-  secure: true,
-  sameSite: true,
+import { CookieSerializeOptions } from "@fastify/cookie";
+
+export const cookieOptions: CookieSerializeOptions = {
+  path: "/",
   httpOnly: true,
-  maxAge: 1000 * 60 * 60 * 24 * 7,
+  sameSite: "lax",
+  secure: false,
 };
