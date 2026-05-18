@@ -4,3 +4,19 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #820ad1;
+  color: #fff;
+  cursor: pointer;
+}
+
+.title{
+  text-align: center;
+  margin-bottom: 10px;
+}

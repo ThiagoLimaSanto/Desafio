@@ -4,6 +4,7 @@ import fastifyJwt from "@fastify/jwt";
 import "dotenv/config";
 import { fastify } from "fastify";
 import { connect } from "./repository/mongoose";
+import { BookRouter } from "./routes/BookRouter";
 import { UserRouter } from "./routes/UserRouter";
 
 export const app = fastify();
@@ -20,6 +21,7 @@ if (
 app.register(cors, {
   origin: process.env.FRONTEND_URL,
   credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
 });
 
 app.register(fastifyCookie, {
@@ -35,11 +37,12 @@ app.register(fastifyJwt, {
 });
 
 app.register(UserRouter, { prefix: "/user" });
+app.register(BookRouter, { prefix: "/book" });
 
 const start = async () => {
   try {
     await connect();
-
+    
     await app.listen({
       port: Number(process.env.PORT),
       host: "0.0.0.0",

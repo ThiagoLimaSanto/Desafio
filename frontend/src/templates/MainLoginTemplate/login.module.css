@@ -46,17 +46,6 @@
   object-position: center;
 }
 
-.buttonLogin {
-  width: 100%;
-  margin-top: 20px;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  background-color: #820ad1;
-  color: #fff;
-  cursor: pointer;
-}
-
 .span {
   width: 100%;
   margin-top: 20px;
