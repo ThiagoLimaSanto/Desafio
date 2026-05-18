@@ -8,6 +8,8 @@ export function Home() {
 
   if (isLoading) return <p>Carregando...</p>;
 
+  console.log(data);
+
   return (
     <main className={styles.fundo}>
       <NavBar role="Catálogo de Livros" />
@@ -19,30 +21,32 @@ export function Home() {
           </p>
         </div>
         <div className={styles.card}>
-          {data?.books.map((book) => (
-            <div key={book._id} className={styles.cardItem}>
-              <div className={styles.main}>
-                <div>
-                  <h2>{book.titulo}</h2>
-                  <p className={styles.autor}>
-                    {book.autor} - {book.ano}
-                  </p>
+          {Array.isArray(data?.books) && data.books.length > 0 ? (
+            data.books.map((book) => (
+              <div key={book._id} className={styles.cardItem}>
+                <div className={styles.main}>
+                  <div>
+                    <h2>{book.titulo}</h2>
+                    <p className={styles.autor}>
+                      {book.autor} - {book.ano}
+                    </p>
+                  </div>
+                  <p className={styles.genero}>{book.genero}</p>
                 </div>
-                <p className={styles.genero}>{book.genero}</p>
+                <div className={styles.stockContainer}>
+                  <p className={styles.stock}>{book.estoque} disponiveis</p>
+                  <button
+                    onClick={() => removestock(book._id)}
+                    className={styles.button}
+                  >
+                    Retirar
+                  </button>
+                </div>
               </div>
-              <div className={styles.stockContainer}>
-                <p className={styles.stock}>{book.estoque} disponiveis</p>
-                <button
-                  onClick={() => {
-                    removestock(book._id);
-                  }}
-                  className={styles.button}
-                >
-                  Retirar
-                </button>
-              </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>Nenhum livro cadastrado.</p>
+          )}
         </div>
       </div>
     </main>
