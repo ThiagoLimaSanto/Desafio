@@ -1,0 +1,41 @@
+.fundo {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ebebeb;
+}
+
+.adminContainer {
+  width: 1200px;
+  height: 100vh;
+}
+
+.button {
+  padding: 10px 20px 10px 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.cadastrar {
+  background-color: #000;
+  color: #fff;
+}
+
+.filtro {
+  background-color: #afadad;
+  color: #fff;
+}
+
+.action {
+  margin: 30px 10px 30px 10px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}

@@ -1,0 +1,45 @@
+.catalog {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titleSearch {
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 16px;
+  font-weight: 400;
+  color: #757575;
+  margin-bottom: 4px;
+}
+
+.search {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: text;
+  width: 500px;
+}
+
+.input {
+  border: none;
+  outline: none;
+  flex: 1;
+}
