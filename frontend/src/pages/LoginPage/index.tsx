@@ -20,7 +20,7 @@ export function LoginPage() {
       link="/register"
       handleSubmit={handleSubmit}
     >
-      <MainForm>
+      <MainForm title="Login" handleSubmit={handleSubmit}>
         <Input
           id="email"
           type="email"

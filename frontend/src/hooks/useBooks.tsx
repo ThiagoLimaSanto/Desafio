@@ -64,3 +64,20 @@ export function useDeleteBooks() {
     },
   });
 }
+
+export function useRemoveStock() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const response = await api.patch(`/book/removestock/${id}`);
+      return response.data.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["books"] });
+      showMessage.success("Livro obtido com sucesso!");
+    },
+    onError: () => {
+      showMessage.error("Erro ao obter livro!");
+    },
+  });
+}

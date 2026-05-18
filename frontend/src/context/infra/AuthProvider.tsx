@@ -39,7 +39,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       showMessage.success("Entrou!");
 
-      navigate(data.role === "ADMIN" ? "/admin" : "/home", {
+      navigate(data.role === "ADMIN" ? "/admin" : "/", {
         replace: true,
       });
     },

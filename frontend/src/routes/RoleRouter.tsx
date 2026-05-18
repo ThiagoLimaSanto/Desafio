@@ -16,7 +16,7 @@ export function RoleRoute({ allowedRoles }: RoleRouteProps) {
   }
 
   if (!allowedRoles.includes(user.role as userRole)) {
-    return <Navigate to="/home" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return <Outlet />;

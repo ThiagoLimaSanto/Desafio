@@ -6,14 +6,22 @@ import { InfoBooks } from "../../components/InfoBooks";
 import { Modal } from "../../components/Modal";
 import { NavBar } from "../../components/NavBar";
 import { usePostBooks } from "../../hooks/useBooks";
-import type { BookSchema } from "../../types/Book";
+import type { UpdateBookInput } from "../../types/Book";
 import styles from "./admin.module.css";
 
 export function AdminPages() {
   const { mutate: post } = usePostBooks();
   const [open, setOpen] = useState(false);
+  const [book, setBook] = useState<UpdateBookInput>({
+    _id: "",
+    titulo: "",
+    autor: "",
+    genero: "",
+    ano: 0,
+    estoque: 0,
+  });
 
-  const handleSubmit = (book: BookSchema) => {
+  const handleSubmit = () => {
     post(book);
     setOpen(false);
   };
@@ -37,9 +45,10 @@ export function AdminPages() {
       </div>
       <Modal open={open} setOpen={setOpen}>
         <FormBooks
+          setBook={setBook}
           title="Novo Livro"
-          handleSubmit={() => handleSubmit}
-          book={{}}
+          handleSubmit={handleSubmit}
+          book={book}
         />
       </Modal>
     </>

@@ -63,4 +63,19 @@ export class BookService {
     const newBook = await Book.findByIdAndUpdate(id, { active: false });
     return newBook;
   }
+
+  async removeBookStock(id: string) {
+    if (!isValidObjectId(id)) throw new AppError("Id invalido", 400);
+
+    const book = await Book.findById(id);
+    if (!book) throw new AppError("Livro não encontrado", 404);
+
+    if (book.estoque <= 0) throw new AppError("Livro sem estoque", 400);
+
+    book.estoque = book.estoque - 1;
+
+    const updated = await book.save();
+
+    return updated;
+  }
 }

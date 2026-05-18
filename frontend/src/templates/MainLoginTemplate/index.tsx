@@ -9,11 +9,9 @@ type MainLoginTemplateProps = {
 };
 
 export function MainLoginTemplate({
-  textButton,
   textLink,
   children,
   link,
-  handleSubmit,
 }: MainLoginTemplateProps) {
   return (
     <div className={styles.fundo}>
@@ -34,9 +32,6 @@ export function MainLoginTemplate({
               Clique aqui.
             </a>
           </span>
-          <button onClick={() => handleSubmit()} className={styles.buttonLogin}>
-            {textButton}
-          </button>
         </div>
       </div>
     </div>

@@ -1,0 +1,88 @@
+.fundo {
+  width: 100vw;
+  height: 100vh;
+  background-color: #ebebeb;
+}
+
+.container {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  margin-top: 40px;
+}
+
+.p {
+  font-size: 16px;
+  font-weight: 400;
+  color: #757575;
+  margin-bottom: 4px;
+}
+
+.card {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.cardItem {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 180px;
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.autor {
+  margin-top: 5px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #757575;
+  margin-bottom: 4px;
+}
+
+.genero {
+  margin-top: 5px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #757575;
+  margin-bottom: 4px;
+}
+
+.stockContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stock {
+  margin-top: 5px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #757575;
+  margin-bottom: 4px;
+}
+
+.button {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px 10px 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}

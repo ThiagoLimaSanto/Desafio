@@ -56,4 +56,15 @@ export class BookController {
 
     return reply.status(200).send(book);
   }
+
+  async removeBookStock(
+    request: FastifyRequest<{ Params: { id: string } }>,
+    reply: FastifyReply,
+  ) {
+    const { id } = request.params;
+
+    const book = await service.removeBookStock(id);
+
+    return reply.status(200).send(book);
+  }
 }

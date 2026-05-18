@@ -22,7 +22,7 @@ export function RegisterPage() {
       link="/login"
       handleSubmit={handleSubmit}
     >
-      <MainForm>
+      <MainForm title="Registrar" handleSubmit={handleSubmit}>
         <Input
           id="name"
           type="text"
