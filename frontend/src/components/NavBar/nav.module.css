@@ -1,5 +1,5 @@
-.home {
-  width: 100%;
+.nav {
+  width: 100vw;
   background-color: #fff;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   padding: 16px 24px;
@@ -7,6 +7,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 1200px;
+  margin: 0 auto;
 }
 
 .title {
