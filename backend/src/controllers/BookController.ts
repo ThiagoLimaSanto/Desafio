@@ -1,4 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
+import { publishBookCreated } from "../kafka/producer";
 import { BookService } from "../services/BookService";
 import { BookSchema } from "../types/Book";
 
@@ -23,6 +24,12 @@ export class BookController {
       genero,
       ano,
       estoque,
+    });
+
+    await publishBookCreated({
+      userId: request.user.id,
+      bookId: book.id,
+      title: book.titulo,
     });
 
     return reply.status(201).send(book);

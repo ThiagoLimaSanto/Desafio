@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { BookController } from "../controllers/BookController";
 import { authGuard } from "../middlewares/auth.middleware";
 import { authRoles } from "../middlewares/authRoles";
+import { getUserByToken } from "../middlewares/getUserByToken";
 import { userRole } from "../types/User";
 const bookController = new BookController();
 
@@ -20,7 +21,7 @@ export async function BookRouter(app: FastifyInstance) {
   app.post(
     "/cadastrar",
     {
-      preHandler: [authGuard, authRoles([userRole.ADMIN])],
+      preHandler: [authGuard, getUserByToken, authRoles([userRole.ADMIN])],
       schema: {
         body: {
           type: "object",

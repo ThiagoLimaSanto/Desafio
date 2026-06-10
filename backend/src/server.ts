@@ -6,6 +6,7 @@ import { fastify } from "fastify";
 import { connect } from "./repository/mongoose";
 import { BookRouter } from "./routes/BookRouter";
 import { UserRouter } from "./routes/UserRouter";
+import { connectProducer } from "./kafka/producer";
 
 export const app = fastify();
 
@@ -42,7 +43,8 @@ app.register(BookRouter, { prefix: "/book" });
 const start = async () => {
   try {
     await connect();
-    
+    await connectProducer();
+
     await app.listen({
       port: Number(process.env.PORT),
       host: "0.0.0.0",

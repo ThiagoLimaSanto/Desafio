@@ -2,6 +2,7 @@ import { isValidObjectId } from "mongoose";
 import { AppError } from "../errors/AppError";
 import { Book } from "../models/BooksModel";
 import { BookSchema } from "../types/Book";
+import { publishBookCreated } from "../kafka/producer";
 
 export class BookService {
   async getAllBooks() {

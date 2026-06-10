@@ -8,8 +8,6 @@ export function Home() {
 
   if (isLoading) return <p>Carregando...</p>;
 
-  console.log(data);
-
   return (
     <main className={styles.fundo}>
       <NavBar role="Catálogo de Livros" />
