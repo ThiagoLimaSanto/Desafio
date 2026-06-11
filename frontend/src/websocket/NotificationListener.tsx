@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { showMessage } from "../adapter/ShowMessage";
 
 export function NotificationListener() {
   const queryClient = useQueryClient();
@@ -15,7 +16,7 @@ export function NotificationListener() {
 
       console.log("Nova notificação:", notification);
 
-      alert(notification.message);
+      showMessage.success(notification.message);
 
       queryClient.invalidateQueries({ queryKey: ["books"] });
     };

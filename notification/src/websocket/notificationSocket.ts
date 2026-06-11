@@ -5,15 +5,22 @@ import { WebSocket } from "ws";
 const clients = new Set<WebSocket>();
 
 export async function notificationSocket(app: FastifyInstance) {
-  app.get("/notifications/ws", { websocket: true }, (socket) => {
-    clients.add(socket);
+  app.get("/notifications/ws", { websocket: true }, async (socket, request) => {
+    try {
+      await request.jwtVerify({ onlyCookie: true });
 
-    console.log("Cliente conectado");
+      if (request.user.role === "ADMIN") {
+        return socket.close();
+      }
 
-    socket.on("close", () => {
-      clients.delete(socket);
-      console.log("Cliente desconectado");
-    });
+      clients.add(socket);
+
+      socket.on("close", () => {
+        clients.delete(socket);
+      });
+    } catch {
+      socket.close();
+    }
   });
 }
 

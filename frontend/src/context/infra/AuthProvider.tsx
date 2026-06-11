@@ -28,7 +28,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const loginMutation = useMutation({
     mutationFn: async (data: UserLogin) => {
-      showMessage.dismiss();
       const response = await api.post("/user/login", data);
       console.log(response.data);
       
@@ -50,7 +49,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const registerMutation = useMutation({
     mutationFn: async (data: UserSchema) => {
-      showMessage.dismiss();
       await api.post("/user/cadastrar", data);
     },
     onSuccess: () => {
@@ -64,7 +62,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logoutMutation = useMutation({
     mutationFn: async () => {
-      showMessage.dismiss();
       await api.post("/user/logout");
     },
     onSuccess: () => {
@@ -78,7 +75,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   });
 
   const handleError = (err: unknown) => {
-    showMessage.dismiss();
     if (err instanceof AxiosError) {
       showMessage.error(err.response?.data?.message);
     } else if (err instanceof Error) {

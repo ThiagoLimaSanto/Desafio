@@ -32,6 +32,9 @@ services:
       - ./notification:/app
       - /app/node_modules
     environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - COOKIE_SECRET=${COOKIE_SECRET}
+      - FRONTEND_URL=${FRONTEND_URL}
       - DATABASE_URL=${DATABASE_URL}
       - PORT2=${PORT2}
     depends_on:
