@@ -11,13 +11,32 @@ services:
       - /app/node_modules
     environment:
       - DATABASE_URL=${DATABASE_URL}
-      - PORT=${PORT}
+      - PORT1=${PORT1}
       - JWT_SECRET=${JWT_SECRET}
       - COOKIE_SECRET=${COOKIE_SECRET}
       - PEPPER=${PEPPER}
       - FRONTEND_URL=${FRONTEND_URL}
+      - KAFKA_BROKER=${KAFKA_BROKER}
     depends_on:
       - mongodb
+      - kafka
+
+  notification:
+    build:
+      context: ./notification
+      dockerfile: Dockerfile
+    container_name: notification
+    ports:
+      - "3334:3334"
+    volumes:
+      - ./notification:/app
+      - /app/node_modules
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - PORT2=${PORT2}
+    depends_on:
+      - mongodb
+      - kafka
 
   frontend:
     build:
@@ -30,7 +49,7 @@ services:
       - ./frontend:/app
       - /app/node_modules
     environment:
-      - VITE_API_URL=http://localhost:3333
+      - VITE_API_URL=${VITE_API_URL}
       - CHOKIDAR_USEPOLLING=true
     depends_on:
       - app
@@ -46,6 +65,28 @@ services:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 10s
       retries: 5
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.1
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka:
+    image: confluentinc/cp-kafka:7.6.1
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
 volumes:
   desafio:

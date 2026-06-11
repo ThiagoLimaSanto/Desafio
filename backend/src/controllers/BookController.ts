@@ -26,11 +26,14 @@ export class BookController {
       estoque,
     });
 
-    await publishBookCreated({
-      userId: request.user.id,
-      bookId: book.id,
-      title: book.titulo,
-    });
+    try {
+      await publishBookCreated({
+        bookId: book.id,
+        title: book.titulo,
+      });
+    } catch (error) {
+      console.error("Erro ao publicar evento BOOK_CREATED:", error);
+    }
 
     return reply.status(201).send(book);
   }

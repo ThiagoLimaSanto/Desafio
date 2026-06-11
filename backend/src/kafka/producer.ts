@@ -1,8 +1,13 @@
 import { Kafka } from "kafkajs";
+import { AppError } from "../errors/AppError";
+
+if (!process.env.KAFKA_BROKER) {
+  throw new AppError("Kafka broker not defined");
+}
 
 const kafka = new Kafka({
   clientId: "book-api",
-  brokers: ["localhost:9092"],
+  brokers: [process.env.KAFKA_BROKER],
 });
 
 export const producer = kafka.producer();
@@ -12,13 +17,7 @@ export async function connectProducer(): Promise<void> {
   console.log("Producer connected");
 }
 
-export async function disconnectProducer(): Promise<void> {
-  await producer.disconnect();
-  console.log("Producer disconnected");
-}
-
 export async function publishBookCreated(event: {
-  userId: string;
   bookId: string;
   title: string;
 }): Promise<void> {
@@ -28,7 +27,8 @@ export async function publishBookCreated(event: {
       {
         value: JSON.stringify({
           eventType: "BOOK_CREATED",
-          ...event,
+          bookId: event.bookId,
+          title: event.title,
           createdAt: new Date().toISOString(),
         }),
       },

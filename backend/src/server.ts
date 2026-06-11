@@ -3,20 +3,21 @@ import cors from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
 import "dotenv/config";
 import { fastify } from "fastify";
+import { connectProducer } from "./kafka/producer";
 import { connect } from "./repository/mongoose";
 import { BookRouter } from "./routes/BookRouter";
 import { UserRouter } from "./routes/UserRouter";
-import { connectProducer } from "./kafka/producer";
+import { AppError } from "./errors/AppError";
 
 export const app = fastify();
 
 if (
   !process.env.FRONTEND_URL ||
-  !process.env.PORT ||
+  !process.env.PORT1 ||
   !process.env.JWT_SECRET ||
   !process.env.COOKIE_SECRET
 ) {
-  throw new Error("Variaveis de ambiente não definida");
+  throw new AppError("Variaveis de ambiente não definida");
 }
 
 app.register(cors, {
@@ -43,14 +44,14 @@ app.register(BookRouter, { prefix: "/book" });
 const start = async () => {
   try {
     await connect();
-    await connectProducer();
 
     await app.listen({
-      port: Number(process.env.PORT),
+      port: Number(process.env.PORT1),
       host: "0.0.0.0",
     });
 
-    console.log(`Server running on port ${process.env.PORT}`);
+    await connectProducer();
+    console.log(`Server running on port ${process.env.PORT1}`);
   } catch (err) {
     app.log.error(err);
     process.exit(1);
