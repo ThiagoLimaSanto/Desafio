@@ -3,9 +3,9 @@ import "dotenv/config";
 import { fastify } from "fastify";
 import { connect } from "./repository/mongoose";
 import { startConsumer } from "./kafka/consumer";
-import { AppError } from "../errors/AppError";
 import { notificationSocket } from "./websocket/notificationSocket";
 import websocket from "@fastify/websocket";
+import { AppError } from "./errors/AppError";
 
 export const app = fastify();
 

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import "dotenv/config";
-import { AppError } from "../../errors/AppError";
+import { AppError } from "../errors/AppError";
 
 export const connect = async () => {
   if (!process.env.DATABASE_URL2) {

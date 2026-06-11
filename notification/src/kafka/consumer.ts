@@ -1,7 +1,7 @@
 import { Kafka } from "kafkajs";
-import { AppError } from "../../errors/AppError";
 import { NotificationService } from "../services/NotificationService";
 import { sendNotificationToClients } from "../websocket/notificationSocket";
+import { AppError } from "../errors/AppError";
 
 interface BookCreatedEvent {
   eventType: "BOOK_CREATED";
